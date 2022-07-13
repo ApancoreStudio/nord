@@ -1,0 +1,1 @@
+-- resourse_textures
