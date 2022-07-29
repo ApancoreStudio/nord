@@ -1,1 +1,1 @@
--- resourse_textures
+-- resourses textures
