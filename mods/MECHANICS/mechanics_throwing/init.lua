@@ -5,6 +5,16 @@ local СONTROL_CHARGE = "RMB"
 -- Время зарядки одной стадии
 local TIME_CHARGE = 1
 
+-- Заряд лука у игрока
+throwing.charges = {}
+
+minetest.register_on_joinplayer(function(player)
+	local name = player:get_player_name()
+	if not throwing.charges[name] then
+		throwing.charges[name] = 0
+	end
+end)
+
 -- Стадии зарядки деревянного лука
 throwing.bow_wooden_stages = {
 	stages = {
@@ -18,15 +28,17 @@ throwing.bow_wooden_stages = {
 
 -- Таблица снарядов итем = сущность, скорость
 throwing.projectile_arrow = {
-	["items_tools:arrow"] = {"mechanics_throwing:arrow", 30}
+	["items_tools:arrow"] = {"mechanics_throwing:arrow", 7},
 }
 
 -- Зарядка лука одного вида
-function bow_charge(stack, hold_time, bow_stages)
+function bow_charge(stack, hold_time, bow_stages, player)
+	local name = player:get_player_name()
 	for key, value in pairs(bow_stages.stages) do
 		if stack:get_name() == value then
 			if (hold_time >= bow_stages.charging_time[key]) and (#bow_stages.stages >= key+1) then
 				stack:set_name(bow_stages.stages[key+1])
+				throwing.charges[name] = throwing.charges[name]+1
 				return stack
 			end
 		end
@@ -46,13 +58,14 @@ function arrow_shot(player)
 	local look_dir = player:get_look_dir()
 	local player_pos = player:get_pos()
 	local arrow_pos = {x = player_pos.x, y = player_pos.y+1.5, z = player_pos.z}
+	local charge = throwing.charges[player:get_player_name()]
 	for key, value in pairs(throwing.projectile_arrow) do
 		if inv:contains_item("main", key) then
 			local arrow = minetest.add_entity(arrow_pos, value[1])
 			arrow:add_velocity({
-				x = look_dir.x*value[2],
-				y = look_dir.y*value[2],
-				z = look_dir.z*value[2],
+				x = look_dir.x*value[2]*charge,
+				y = look_dir.y*value[2]*charge,
+				z = look_dir.z*value[2]*charge,
 			})
 			arrow:set_acceleration({x = 0, y = GRAVITY*(-1), z = 0})
 			inv:remove_item("main", key)
@@ -81,7 +94,7 @@ core_callback.register_on_hold(function(player, control_name, hold_time)
 
 	if not there_is_arrows(player) then return end
 
-	local new_stack = bow_charge(stack, hold_time, throwing.bow_wooden_stages)
+	local new_stack = bow_charge(stack, hold_time, throwing.bow_wooden_stages, player)
 	if new_stack then
 		player:set_wielded_item(new_stack)
 	end
@@ -96,7 +109,9 @@ core_callback.register_on_release(function(player, control_name)
 	if not stack:get_definition().groups.bow then return end
 
 	arrow_shot(player)
-	
+
+	throwing.charges[player:get_player_name()] = 0
+
 	local new_stack = bow_discharge(stack, throwing.bow_wooden_stages)
 	if new_stack then
 		player:set_wielded_item(new_stack)
@@ -110,6 +125,8 @@ core_callback.register_on_wield_index_change(function(player, player_wield_index
 
 	if not stack:get_definition().groups.bow then return end
 
+	throwing.charges[player:get_player_name()] = 0
+
 	local new_stack = bow_discharge(stack, throwing.bow_wooden_stages)
 	if new_stack then
 		inv:set_stack("main", player_last_wield_index, new_stack)
@@ -117,4 +134,4 @@ core_callback.register_on_wield_index_change(function(player, player_wield_index
 end)
 
 -- Регистрация снаряда-стрелы (entities_projectiles)
-projectiles.register_projectile("mechanics_throwing:arrow")
+projectiles.register_projectile_arrow_type("mechanics_throwing:arrow", "items_tools:arrow")

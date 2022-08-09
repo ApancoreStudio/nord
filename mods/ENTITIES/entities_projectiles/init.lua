@@ -5,7 +5,7 @@ GRAVITY = 10
 
 projectiles = {}
 
-projectiles.register_projectile = function(name, def)
+projectiles.register_projectile_arrow_type = function(name, item, def)
 	-- Независящие от def параметры
 	minetest.register_entity(name, {
 		max_hp = 1,
@@ -13,13 +13,14 @@ projectiles.register_projectile = function(name, def)
 		collide_with_objects = true,
 		pointable = true, -- Потом изменить на false
 		use_texture_alpha = true,
+		visual_size = {x = 1.5, y = 1.5, z = 1.5},
+		visual = "mesh",
+		mesh = "projectile_arrow_type.obj",
+		collisionbox = {-0.15, -0.15, -0.15, 0.15, 0.15, 0.15},
 
 		-- Зависящие от def параметры
-		visual = "sprite",
-		collisionbox = {-0.25, -0.25, -0.25, 0.25, 0.25, 0.25},
-		visual_size = {x = 1, y = 1, z = 1},
 		--mesh = "model.obj",
-		textures = {"items_tools_arrow.png"},
+		textures = {"projectile_arrow.png"},
 		
 		-- Функции
 		on_step = function(self, dtime, moveresult)
@@ -31,9 +32,29 @@ projectiles.register_projectile = function(name, def)
 				if moveresult.collisions[1].type == "node" then return end
 
 				local target = moveresult.collisions[1].object
-
-				target:set_hp(target:get_hp()-3)
+				if target:get_entity_name() == name then
+					self.object:set_acceleration({x = 0, y = -10, z = 0}) -- тут надо сделать GRAVITY
+					target:set_acceleration({x = 0, y = -10, z = 0}) -- тут надо сделать GRAVITY
+				else
+					self.object:remove()
+					target:set_hp(target:get_hp()-3)
+				end
+			else
+				local vel = self.object:get_velocity()
+				if vel.y ~= 0 then
+					local rot = {
+						x = 0,
+						y = math.pi + math.atan2(vel.z, vel.x),
+						z = math.atan2(vel.y, math.sqrt(vel.z*vel.z+vel.x*vel.x))}
+					self.object:set_rotation(rot)
+				end
 			end
+		end,
+
+		on_rightclick = function(self, clicker)
+			local pos = self.object:get_pos()
+			self.object:remove()
+			minetest.add_item(pos, item)
 		end,
 	})
 end

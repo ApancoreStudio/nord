@@ -76,6 +76,7 @@ end
 
 minetest.register_tool("items_tools:bow_wooden", {
 	description = "Wooden bow",
+	range = 0,
 	wield_scale = {x = 2, y = 2, z = 0.75},
 	inventory_image = "items_tools_bow_wooden.png",
 	wield_image = "items_tools_bow_wooden.png",
@@ -98,6 +99,7 @@ minetest.register_tool("items_tools:bow_wooden", {
 
 minetest.register_tool("items_tools:bow_wooden_2", {
 	description = "Wooden bow",
+	range = 0,
 	wield_scale = {x = 2, y = 2, z = 0.75},
 	inventory_image = "items_tools_bow_wooden_2.png",
 	wield_image = "items_tools_bow_wooden_2.png",
@@ -120,6 +122,7 @@ minetest.register_tool("items_tools:bow_wooden_2", {
 
 minetest.register_tool("items_tools:bow_wooden_3", {
 	description = "Wooden bow",
+	range = 0,
 	wield_scale = {x = 2, y = 2, z = 0.75},
 	inventory_image = "items_tools_bow_wooden_3.png",
 	wield_image = "items_tools_bow_wooden_3.png",
@@ -142,6 +145,7 @@ minetest.register_tool("items_tools:bow_wooden_3", {
 
 minetest.register_tool("items_tools:bow_wooden_4", {
 	description = "Wooden bow",
+	range = 0,
 	wield_scale = {x = 2, y = 2, z = 0.75},
 	inventory_image = "items_tools_bow_wooden_4.png",
 	wield_image = "items_tools_bow_wooden_4.png",

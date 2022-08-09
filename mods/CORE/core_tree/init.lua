@@ -1,1 +1,5 @@
--- core_tree
+-- core tree
+
+core_tree = {}
+
+

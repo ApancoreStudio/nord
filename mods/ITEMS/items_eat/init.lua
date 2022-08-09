@@ -8,7 +8,7 @@ function register_food(name, def)
 		inventory_image = def.inventory_image,
 		stack_max = def.stack_max or 99,
 		range = 0,
-		_consumption_time = def.consumption_time, -- Этот параметр лучше ставить кратным LIMIT_TIME из effects
+		_consumption_time = def.consumption_time,
 		_feed_hunger = def.feed_hunger,
 	})
 end

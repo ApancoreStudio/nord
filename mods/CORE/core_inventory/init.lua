@@ -3,8 +3,8 @@
 core_inventory = {}
 
 core_inventory.tabs_button =
-		"image_button[0,-1;1,1;items_eat_bread.png;tab_main;M;true;false]"..
-		"image_button[1,-1;1,1;items_eat_bread.png;tab_equipment;E;true;false]"
+		"image_button[0,-1;1,1;core_inventory_craft_tab.png;tab_main;M;true;false]"..
+		"image_button[1,-1;1,1;core_inventory_equip_tab.png;tab_equipment;E;true;false]"
 
 core_inventory.storage = function(player)
 	local inv = player:get_inventory()

@@ -20,29 +20,34 @@ core_callback = {}
 -- Нажатие
 core_callback.registered_on_press = {}
 
-function core_callback.register_on_press(func)
+core_callback.register_on_press = function(func)
 	core_callback.registered_on_press[#core_callback.registered_on_press+1] = func
 end
 
 -- Отпуск
 core_callback.registered_on_release = {}
 
-function core_callback.register_on_release(func)
+core_callback.register_on_release = function(func)
 	core_callback.registered_on_release[#core_callback.registered_on_release+1] = func
 end
 
 -- Удержание
 core_callback.registered_on_hold = {}
 
-function core_callback.register_on_hold(func)
+core_callback.register_on_hold = function(func)
 	core_callback.registered_on_hold[#core_callback.registered_on_hold+1]=func
 end
 
 -- Смена индекса предмета в руке
 core_callback.registered_on_wield_index_change = {}
 
-function core_callback.register_on_wield_index_change(func)
+core_callback.register_on_wield_index_change = function(func)
 	core_callback.registered_on_wield_index_change[#core_callback.registered_on_wield_index_change+1]=func
+end
+
+core_callback.reset_hold_time = function(player, control_name)
+	local player_name = player:get_player_name()
+	core_callback.players[player_name].controls[control_name][2] = minetest.get_us_time()/1000000
 end
 
 core_callback.players = {}
@@ -72,7 +77,7 @@ minetest.register_on_leaveplayer(function(player)
 	core_callback.players[player:get_player_name()] = nil
 end)
 
-minetest.register_globalstep(function()
+minetest.register_globalstep(function(dtime)
 	for _, player in pairs(minetest.get_connected_players()) do
 		local player_name = player:get_player_name()
 		local player_controls = player:get_player_control()
@@ -95,7 +100,7 @@ minetest.register_globalstep(function()
 			-- Удержание
 			elseif (control_value == true) and (player_last_controls[control_name][1] == true) then
 				for _, func in pairs(core_callback.registered_on_hold) do
-					func(player, control_name, minetest.get_us_time()/1000000-player_last_controls[control_name][2])
+					func(player, control_name, minetest.get_us_time()/1000000-player_last_controls[control_name][2], dtime)
 				end
 
 			-- Отпуск
