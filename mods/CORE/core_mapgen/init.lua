@@ -140,4 +140,56 @@ minetest.register_biome({
 	humidity_point = 70,
 })
 
+minetest.register_biome({
+	name = "Deep earth",
+
+	node_stone = "items_stone:basalt",
+
+	y_max = -150,
+	y_min = -10000,
+
+	vertical_blend = 2,
+})
+
+minetest.register_biome({
+	name = "Magma earth",
+
+	node_stone = "items_stone:magma",
+
+	y_max = -10000,
+	y_min = -20000,
+
+	vertical_blend = 3,
+})
+
+minetest.register_ore({
+	ore_type = "scatter",
+	ore = "items_stone:magma_with_diamond",
+	wherein = "items_stone:magma",
+	clust_scarcity = 16*16*16,
+	clust_num_ores = 12,
+	clust_size = 6,
+	y_max = -10000,
+	y_min = -20000,
+})
+
+minetest.register_decoration({
+	name = "core_mapgen:oak_bush",
+	deco_type = "schematic",
+	place_on = {"items_soil:meadow_turf"},
+	sidelen = 16,
+	noise_params = {
+		offset = -0.004,
+		scale = 0.01,
+		spread = {x = 100, y = 100, z = 100},
+		seed = 137,
+		octaves = 3,
+		persist = 0.66
+	},
+	biomes = {"meadow"},
+	y_max = 31000,
+	y_min = 1,
+	schematic = minetest.get_modpath("core_mapgen") .. "/schematics/oak_bush.mts",
+	flags = "place_center_x, place_center_z",
+})
 

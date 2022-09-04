@@ -2,9 +2,24 @@
 
 minetest.register_node("items_stone:basalt", {
 	description = "Basalt",
-	tiles = {"main_basalt.png"},
+	tiles = {"items_stone_basalt.png"},
 	groups = {cracky = 3, stone = 1}
 })
+
+minetest.register_node("items_stone:magma", {
+	description = "Magma",
+	tiles = {"items_stone_magma.png"},
+	groups = {cracky = 3, stone = 1},
+})
+
+minetest.register_node("items_stone:magma_with_diamond", {
+	description = "Magma With Diamond",
+	tiles = {"items_stone_magma_with_diamond.png"},
+	groups = {cracky = 3, stone = 1},
+	paramtype = "ligh",
+	light_source = 14,
+})
+
 
 minetest.register_node("items_stone:granite", {
 	description = "Granite",
@@ -29,5 +44,5 @@ minetest.register_node("items_stone:glowstone", {
 	tiles = {"items_stone_glowstone.png"},
 	groups = {cracky = 3, stone = 1, light = 1},
 	paramtype = "light",
-	light_source = 14,
-	})
+	light_source = 15,
+})

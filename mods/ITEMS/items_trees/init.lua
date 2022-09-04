@@ -44,14 +44,17 @@ function register_tree_blocks(tree_def)
 		wood = 1,
 		choppy = tree_def.hardness_trunk,
 		oddly_breakable_by_hand = tree_def.oddly_breakable_by_hand
-		}
+	}
 	local planks_groups = {
 		wood = 1,
 		planks = 1,
 		choppy = tree_def.hardness_planks,
 		oddly_breakable_by_hand = tree_def.oddly_breakable_by_hand
-		}
-	local leaf_groups = {leaf = 1}
+	}
+	local leaf_groups = {
+		leafs = 1,
+		oddly_breakable_by_hand = 3,
+	}
 	local stick_groups = {stick = 1}
 
 	local planks = modname..":"..tree.."_planks"
@@ -109,7 +112,7 @@ function register_tree_blocks(tree_def)
 		if tree_def.flags.log or tree_def.flags.trunk then
 			minetest.register_craft({
 				type = "shapeless",
-				output = planks,
+				output = planks.." 4",
 				recipe = {log_name},
 			})
 		end
@@ -128,25 +131,29 @@ function register_tree_blocks(tree_def)
 	-- leaf
 	if tree_def.flags.leaf then
 		minetest.register_node(modname..":"..tree.."_leaf", {
-			drawtype = "glasslike",
+			drawtype = "allfaces_optional",
 			description = tree.." leaf",
 			groups = leaf_groups,
 			tiles = {
 				modname.."_"..tree.."_leaf.png",
 			},
-			use_texture_alfa = "blend",
+			use_texture_alfa = "clip",
+			paramtype = "light",
+			sunlight_propagates = true,
 		})
 	end
 	-- flower leaf
 	if tree_def.flags.flower_leaf then
 		minetest.register_node(modname..":"..tree.."_flower_leaf", {
-			drawtype = "glasslike",
+			drawtype = "allfaces_optional",
 			description = tree.." flower leaf",
 			groups = leaf_groups,
 			tiles = {
 				modname.."_"..tree.."_flower_leaf.png",
 			},
-			use_texture_alfa = "blend",
+			use_texture_alfa = "clip",
+			paramtype = "light",
+			sunlight_propagates = true,
 		})
 	end
 	-- stick
