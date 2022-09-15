@@ -87,3 +87,12 @@ minetest.register_entity("items_alchemy:bonfire_item_cooking", {
 	visual_size = {x = 0.3, y = 0.3, z = 0.3},
 	textures = {""},
 })
+
+minetest.register_craft({
+	output = "items_alchemy:bonfire",
+	recipe = {
+		{"","",""},
+		{"","items_stone:flint",""},
+		{"group:log","group:log","group:log"},
+	}
+})
