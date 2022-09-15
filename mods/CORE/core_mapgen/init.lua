@@ -116,12 +116,11 @@ minetest.register_biome({
 -- Леса
 minetest.register_biome({
 	name = "forest",
-	node_dust = "items_soil:forest_turf",
 
-	node_top = "items_soil:chernozem",
-	depth_top = 4,
+	node_top = "items_soil:forest_turf",
+	depth_top = 1,
 
-	node_filler = "items_stone:limestone",
+	node_filler = "items_soil:chernozem",
 	depth_filler = 3,
 
 	node_stone = "items_stone:granite",
@@ -132,7 +131,7 @@ minetest.register_biome({
     depth_riverbed = 4,
 
 	y_max = 52,
-	y_min = -32,
+	y_min = 3,
 
 	vertical_blend = 0,
 
@@ -192,3 +191,24 @@ minetest.register_decoration({
 	schematic = minetest.get_modpath("core_mapgen") .. "/schematics/oak_bush.mts",
 	flags = "place_center_x, place_center_z",
 })
+
+minetest.register_decoration({
+	name = "core_mapgen:oak_tree",
+	deco_type = "schematic",
+	place_on = {"items_soil:forest_turf"},
+	sidelen = 16,
+	noise_params = {
+		offset = 0.04,
+		scale = 0.01,
+		spread = {x = 100, y = 100, z = 100},
+		seed = 137,
+		octaves = 3,
+		persist = 0.66
+	},
+	biomes = {"forest"},
+	y_max = 31000,
+	y_min = 1,
+	schematic = minetest.get_modpath("core_mapgen") .. "/schematics/oak_tree.mts",
+	flags = "place_center_x, place_center_z",
+})
+
