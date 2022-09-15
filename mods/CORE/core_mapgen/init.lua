@@ -192,4 +192,3 @@ minetest.register_decoration({
 	schematic = minetest.get_modpath("core_mapgen") .. "/schematics/oak_bush.mts",
 	flags = "place_center_x, place_center_z",
 })
-
