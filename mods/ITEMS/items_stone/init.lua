@@ -46,3 +46,9 @@ minetest.register_node("items_stone:glowstone", {
 	paramtype = "light",
 	light_source = 15,
 })
+
+minetest.register_craftitem("items_stone:flint", {
+	description = "Flint",
+	inventory_image = "items_stone_flint.png",
+	groups = {flint = 1},
+})

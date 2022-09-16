@@ -41,6 +41,7 @@ fruit:
 function register_tree_blocks(tree_def)
 	local tree = tree_def.name
 	local trunk_groups = {
+		log = 1,
 		wood = 1,
 		choppy = tree_def.hardness_trunk,
 		oddly_breakable_by_hand = tree_def.oddly_breakable_by_hand

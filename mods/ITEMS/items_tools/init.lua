@@ -5,6 +5,11 @@ tools = {}
 dofile(minetest.get_modpath(minetest.get_current_modname()) .. "/shovels.lua")
 dofile(minetest.get_modpath(minetest.get_current_modname()) .. "/picks.lua")
 
+tools.sources = {
+	flint = "items_stone:flint",
+	wood = "group:wood",
+}
+
 -- A special item - the hand
 minetest.register_item(":", {
 	type = "none",
@@ -58,6 +63,19 @@ local function register_tool(tooltype, material, itemdef)
 	})
 end
 
+local function register_craft(tooltype, material, itemdef)
+	if tools.sources[material] == nil then
+		minetest.log("error", "Cannot find source material for the craft recipe"..
+			" (output='"..material.."')")
+	end
+	for _, r in pairs(tools[tooltype].get_recipes(tools.sources[material])) do
+		minetest.register_craft({
+			output = "items_tools:"..tooltype.."_"..material,
+			recipe = r
+		})
+	end
+end
+
 local tooltypes = {
 	"shovel", "pick"
 }
@@ -67,7 +85,7 @@ for _, tooltype in ipairs(tooltypes) do
 		local itemdef = tools[tooltype][material]
 		if type(itemdef) == "table" then
 			register_tool(tooltype, material, itemdef)
-			--register_craft(tooltype, material, itemdef)
+			register_craft(tooltype, material, itemdef)
 		end
 	end
 end

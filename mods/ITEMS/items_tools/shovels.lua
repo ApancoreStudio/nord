@@ -8,7 +8,7 @@ tools.shovel = {
 			{'group:stick'},
 		}}
 	end,
-	Wood = {
+	wood = {
 		description = "Wooden Shovel",
 		wield_image_transform = "^[transformR90",
 		full_punch_interval = 1.2,
