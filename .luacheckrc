@@ -1,5 +1,7 @@
 unused_args = false
 allow_defined_top = true
+max_line_length = false
+max_cyclomatic_complexity = 10
 
 std = "lua51"
 
