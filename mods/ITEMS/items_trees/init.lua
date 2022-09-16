@@ -39,6 +39,16 @@ fruit:
 --]]
 
 function register_tree_blocks(tree_def)
+	if tree_def == nil then
+		return
+	end
+	if type(tree_def) ~= "table" then
+		return
+	end
+	if not tree_def.flags then
+		return
+	end
+
 	local tree = tree_def.name
 	local trunk_groups = {
 		log = 1,
@@ -61,8 +71,8 @@ function register_tree_blocks(tree_def)
 	local planks = modname..":"..tree.."_planks"
 	local stick = modname..":"..tree.."_stick"
 	local log_name = modname..":"..tree.."_log"
-	
-	
+
+
 	-- trunk & log
 	if tree_def.flags.trunk then
 		-- trunk

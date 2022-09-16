@@ -21,4 +21,15 @@ read_globals = {
 	"VoxelManip", "VoxelArea",
 	"ItemStack", "Settings",
 	"dump", "DIR_DELIM",
+
+	-- CORE
+	"core_callback", "core_functions",
+
+	-- ENTITIES
+	"PROJECTILE_GRAVITY", "projectiles",
+
+	-- ITEMS
+
+	-- MECHANICS
+
 }

@@ -1,7 +1,7 @@
 -- entities projectiles
 
 -- acceleration of gravity
-GRAVITY = 10
+PROJECTILE_GRAVITY = {x = 0, y = -10, z = 0} -- Перенести константу GRAVITY куда-то в CORE или в будущее API мобов (с) Доло
 
 projectiles = {}
 
@@ -21,7 +21,7 @@ projectiles.register_projectile_arrow_type = function(name, item, def)
 		-- Зависящие от def параметры
 		--mesh = "model.obj",
 		textures = {"projectile_arrow.png"},
-		
+
 		-- Функции
 		on_step = function(self, dtime, moveresult)
 			if moveresult.collides or moveresult.standing_on_object then
@@ -33,8 +33,8 @@ projectiles.register_projectile_arrow_type = function(name, item, def)
 
 				local target = moveresult.collisions[1].object
 				if target:get_entity_name() == name then
-					self.object:set_acceleration({x = 0, y = -10, z = 0}) -- тут надо сделать GRAVITY
-					target:set_acceleration({x = 0, y = -10, z = 0}) -- тут надо сделать GRAVITY
+					self.object:set_acceleration(PROJECTILE_GRAVITY)
+					target:set_acceleration(PROJECTILE_GRAVITY)
 				else
 					self.object:remove()
 					target:set_hp(target:get_hp()-3)

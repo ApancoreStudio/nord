@@ -56,7 +56,7 @@ minetest.register_allow_player_inventory_action(function(player, action, invento
 
 	if action == "move" then
 		local stack = inventory:get_stack(inventory_info.from_list, inventory_info.from_index)
-		group_hipbag = stack:get_definition().groups.hipbag ~= nil
+		local group_hipbag = stack:get_definition().groups.hipbag ~= nil
 
 		if is_equip_hitpbag then
 			if group_hipbag then
@@ -81,8 +81,8 @@ minetest.register_allow_player_inventory_action(function(player, action, invento
 end)
 
 minetest.register_on_player_inventory_action(function(player, action, inventory, inventory_info)
-	is_quip_to_hitpbag = inventory_info.to_list == "equip_hipbag_right" or inventory_info.to_list == "equip_hipbag_left"
-	is_quip_from_hitbag = inventory_info.from_list == "equip_hipbag_right" or inventory_info.from_list == "equip_hipbag_left"
+	local is_quip_to_hitpbag = inventory_info.to_list == "equip_hipbag_right" or inventory_info.to_list == "equip_hipbag_left"
+	local is_quip_from_hitbag = inventory_info.from_list == "equip_hipbag_right" or inventory_info.from_list == "equip_hipbag_left"
 
 	if action == "move" and (is_quip_to_hitpbag or is_quip_from_hitbag) then
 		player:set_inventory_formspec(core_inventory.player_inventory(player, {tab_equipment = true}))

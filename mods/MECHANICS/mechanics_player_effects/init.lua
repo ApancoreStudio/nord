@@ -5,7 +5,7 @@ effects = {}
 local CONTROL_EATING = "RMB"
 local CONSUM_KEY = "consumption"
 local UPDATE_TIME_EATING = 0.5
-local _time = 0
+-- local _time = 0 -- Неиспользуемая переменная. Удали, если не нужна (с) Доло
 
 effects.players = {} -- Эффекты будут сохранятся при перезаходе игрока, но не будут сохранятся при выключении сервера.
 
@@ -145,6 +145,7 @@ end
 
 effects.imitation_of_eating = function(stack)
 	local name = stack
+	return name -- Избавился от неиспользуемой переменной
 end
 
 core_callback.register_on_hold(function(player, control_name, hold_time)

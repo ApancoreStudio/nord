@@ -7,7 +7,7 @@ minetest.register_alias("mapgen_water_source", "items_liquid:water_source")
 minetest.register_chatcommand("mapgen_climat", {
 	description = "Определяет температуру и влажность для блока на месте игрока",
 	func = function(name, param)
-		player = minetest.get_player_by_name(name)
+		local player = minetest.get_player_by_name(name)
 		local pos = player:get_pos()
 		local hum = minetest.get_humidity(pos)
 		local heat = minetest.get_heat(pos)

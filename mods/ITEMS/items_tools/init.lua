@@ -134,7 +134,7 @@ minetest.register_tool("items_tools:bow_wooden_2", {
 		damage_groups = {fleshy=2},
 	},
 	groups = {wooden = 1, bow = 1},
-	
+
 	_tension = 0,
 })
 

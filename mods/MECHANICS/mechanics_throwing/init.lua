@@ -1,9 +1,9 @@
 -- mechanics throwing
 
 local throwing = {}
-local СONTROL_CHARGE = "RMB"
+local CONTROL_CHARGE = "RMB"
 -- Время зарядки одной стадии
-local TIME_CHARGE = 1
+-- local TIME_CHARGE = 1 -- Неиспользуемая переменная. Удали, если не нужна (с) Доло
 
 -- Заряд лука у игрока
 throwing.charges = {}
@@ -67,7 +67,7 @@ function arrow_shot(player)
 				y = look_dir.y*value[2]*charge,
 				z = look_dir.z*value[2]*charge,
 			})
-			arrow:set_acceleration({x = 0, y = GRAVITY*(-1), z = 0})
+			arrow:set_acceleration(PROJECTILE_GRAVITY)
 			inv:remove_item("main", key)
 			return
 		end
@@ -84,8 +84,8 @@ end
 
 -- Зарядка лука по удержанию
 core_callback.register_on_hold(function(player, control_name, hold_time)
-	-- Зарядка на клавишу СONTROL_CHARGE
-	if control_name ~= СONTROL_CHARGE then return end
+	-- Зарядка на клавишу CONTROL_CHARGE
+	if control_name ~= CONTROL_CHARGE then return end
 
 	local stack = player:get_wielded_item()
 
@@ -102,7 +102,7 @@ end)
 
 -- Разрядка лука при отпуске клавиши
 core_callback.register_on_release(function(player, control_name)
-	if control_name ~= СONTROL_CHARGE then return end
+	if control_name ~= CONTROL_CHARGE then return end
 
 	local stack = player:get_wielded_item()
 
