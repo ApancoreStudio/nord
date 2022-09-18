@@ -39,6 +39,12 @@ minetest.register_node("items_stone:limestone_bricks", {
 	groups = {cracky = 3, stone = 1}
 })
 
+minetest.register_node("items_stone:kharite", {
+	description = "Kharite",
+	tiles = {"items_stone_kharite.png"},
+	groups = {cracky = 3, stone = 1} -- Потом исправить группу 
+})
+
 minetest.register_node("items_stone:glowstone", {
 	description = "Glowstone",
 	tiles = {"items_stone_glowstone.png"},

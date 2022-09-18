@@ -1,7 +1,7 @@
 -- core_mapgen
 
 -- Алиасы
-minetest.register_alias("mapgen_stone", "main:stone")
+minetest.register_alias("mapgen_stone", "items_stone:basalt")
 minetest.register_alias("mapgen_water_source", "items_liquid:water_source")
 
 minetest.register_chatcommand("mapgen_climat", {
@@ -144,8 +144,8 @@ minetest.register_biome({
 
 	node_stone = "items_stone:basalt",
 
-	y_max = -150,
-	y_min = -10000,
+	y_max = -64,
+	y_min = -128,
 
 	vertical_blend = 2,
 })
@@ -155,11 +155,64 @@ minetest.register_biome({
 
 	node_stone = "items_stone:magma",
 
-	y_max = -10000,
-	y_min = -20000,
+	node_cave_liquid = "items_liquid:water_source",
+
+	y_max = -128,
+	y_min = -256,
 
 	vertical_blend = 3,
 })
+
+local wherein_krarite = {"group:stone", "air"}
+
+local function register_interworld_stratum(block, wherein, seed, pos)
+	minetest.register_ore({
+		ore_type = "stratum",
+		ore = block,
+		wherein = wherein,
+		noise_params = {
+			offset = -254,
+			scale = 2,
+			spread = {x = 4, y = 4, z = 4},
+			seed = 1*seed,
+			octaves = 3,
+			persist = 0.7
+		},
+		np_stratum_thickness = {
+			offset = 0.1,
+			scale = 0.5,
+			spread = {x = 4, y = 4, z = 4},
+			seed = 2*seed,
+			octaves = 3,
+			persistence = 0.7
+		},
+		y_max = pos+4,
+		y_min = pos,
+	})
+
+	minetest.register_ore({
+		ore_type = "stratum",
+		ore = block,
+		wherein = wherein,
+		y_max = pos+1,
+		y_min = pos,
+	})
+
+minetest.register_abm({
+	nodenames = {"air"},
+	neighbors = {block},
+	interval = 5.0,
+	chance = 4,
+	max_y = pos+1,
+	min_y = pos,
+	action = function(abm_pos, node, active_object_count, active_object_count_wider)
+		minetest.swap_node(abm_pos, {name = block})
+	end,
+})
+end
+
+register_interworld_stratum("items_stone:kharite", wherein_krarite, 87, -256)
+
 
 minetest.register_ore({
 	ore_type = "scatter",
@@ -168,8 +221,8 @@ minetest.register_ore({
 	clust_scarcity = 16*16*16,
 	clust_num_ores = 12,
 	clust_size = 6,
-	y_max = -10000,
-	y_min = -20000,
+	y_max = -128,
+	y_min = -256,
 })
 
 minetest.register_decoration({
@@ -211,4 +264,25 @@ minetest.register_decoration({
 	schematic = minetest.get_modpath("core_mapgen") .. "/schematics/oak_tree.mts",
 	flags = "place_center_x, place_center_z",
 })
+
+minetest.register_decoration({
+	name = "core_mapgen:roses",
+	deco_type = "simple",
+	place_on = {"items_soil:meadow_turf"},
+	decoration = "items_plants:roses",
+	param2 = 2,
+	sidelen = 16,
+	noise_params = {
+		offset = 0.04,
+		scale = 0.01,
+		spread = {x = 100, y = 100, z = 100},
+		seed = 137,
+		octaves = 3,
+		persist = 0.66
+	},
+	biomes = {"meadow"},
+	y_max = 31000,
+	y_min = 1,
+})
+
 
