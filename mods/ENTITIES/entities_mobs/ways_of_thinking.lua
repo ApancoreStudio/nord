@@ -83,7 +83,7 @@ local function neutral_stand(self)
 end
 
 local function neutral_wandering(self)
-	minetest.log("wandeting")
+	minetest.log("wandering")
 	local path = minetest.find_path(
 		self.object:get_pos(),
 		self._target,

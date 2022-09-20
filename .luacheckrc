@@ -1,3 +1,5 @@
+-- luacheck: ignore
+-- ...чтобы подсветка кода не рычала на этот файл
 unused_args = false
 allow_defined_top = true
 max_line_length = false
@@ -26,7 +28,7 @@ read_globals = {
 	"core_callback", "core_functions",
 
 	-- ENTITIES
-	"PROJECTILE_GRAVITY", "projectiles",
+	"PROJECTILE_GRAVITY", "projectiles", "entities_mobs",
 
 	-- ITEMS
 
