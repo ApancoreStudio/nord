@@ -38,6 +38,7 @@ fruit:
 	modname_name_fruit.png
 --]]
 
+-- luacheck: ignore
 function register_tree_blocks(tree_def)
 	if tree_def == nil then
 		return

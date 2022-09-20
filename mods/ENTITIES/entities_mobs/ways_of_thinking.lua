@@ -54,5 +54,4 @@ entities_mobs.register_way_of_thinking("neutral", {
 	["default"] = neutral_stand,
 	["stand"] = neutral_stand,
 	["wandering"] = neutral_wandering,
-}
-
+})

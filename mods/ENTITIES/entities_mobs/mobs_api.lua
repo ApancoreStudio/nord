@@ -40,7 +40,7 @@ entities_mobs.register_mob = function(name, def)
 		damage_texture_modifier = "^[brighten",
 		show_on_minimap = true,
 
-		_thinking = DEFAULT_THINKING,
+		_thinking = "default",
 		_target = nil,
 		_is_mob = true,
 
