@@ -10,5 +10,11 @@ entities_mobs.register_mob("entities_mobs:bread", {
 	textures = {"items_eat_bread.png"},
 	max_hp = 1,
 	review = 5,
-	way_of_thinking = "standart",
+	way_of_thinking = "neutral",
+	animations = {
+	["frame_speed"] = 15,
+	["run_speed"] = 30,
+	["stand"] = {x = 1, y = 10},
+	["walk"] = {x = 2, y = 10},
+	}
 })
