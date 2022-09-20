@@ -21,7 +21,7 @@ local function find_mobs_and_players(self)
 	return targets
 end
 
-local function standart_stand(self)
+local function standard_stand(self)
 	minetest.log("mob is stand")
 	local targets = find_mobs_and_players(self)
 	if targets[2] then
@@ -29,7 +29,7 @@ local function standart_stand(self)
 	end
 end
 
-local function standart_aggressive(self)
+local function standard_aggressive(self)
 	minetest.log("mob is aggressive")
 	local targets = find_mobs_and_players(self)
 	if not targets[2] then
@@ -37,10 +37,10 @@ local function standart_aggressive(self)
 	end
 end
 
-entities_mobs.register_way_of_thinking("standart", {
-	["default"] = standart_stand,
-	["stand"] = standart_stand,
-	["aggressive"] = standart_aggressive,
+entities_mobs.register_way_of_thinking("standard", {
+	["default"] = standard_stand,
+	["stand"] = standard_stand,
+	["aggressive"] = standard_aggressive,
 })
 
 local function set_random_target_pos(self)
