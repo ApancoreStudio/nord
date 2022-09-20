@@ -58,7 +58,7 @@ local function set_random_target_pos(self)
 		z = mob_pos.z-mob_review,
 	}
 
-	targets_pos = minetest.find_nodes_in_area(pos1, pos2, {"air"}, false)
+	local targets_pos = minetest.find_nodes_in_area(pos1, pos2, {"air"}, false)
 
 	if not targets_pos then
 		return false
