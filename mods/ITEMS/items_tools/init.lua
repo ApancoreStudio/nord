@@ -1,16 +1,22 @@
 -- items tools
 
-tools = {}
+items_tools = {}
 
 dofile(minetest.get_modpath(minetest.get_current_modname()) .. "/shovels.lua")
 dofile(minetest.get_modpath(minetest.get_current_modname()) .. "/picks.lua")
 
-tools.sources = {
-	flint = "items_stone:flint",
-	wood = "group:wood",
+items_tools.materials = {
+	["flint"] = "items_stone:flint",
 }
 
--- A special item - the hand
+items_tools.tooltypes = {
+	"shovel",
+	"pick",
+}
+
+local WIELD_TOOL_SCALE = {x = 2, y = 2, z = 0.75}
+
+-- Рука
 minetest.register_item(":", {
 	type = "none",
 	wield_image = "wieldhand.png",
@@ -27,70 +33,83 @@ minetest.register_item(":", {
 	}
 })
 
-local function get_capability(itemdef, cap)
-	if itemdef[cap] == nil then
+local function get_capability(def, cap)
+	if def[cap] == nil then
 		return nil
 	end
 	return {
-		times = itemdef[cap].times,
-		uses = itemdef[cap].uses,
-		maxlevel = itemdef[cap].maxlevel,
-		maxwear = itemdef[cap].maxwear,
+		times = def[cap].times,
+		uses = def[cap].uses,
+		maxlevel = def[cap].maxlevel,
+		maxwear = def[cap].maxwear,
 	}
 end
 
-local function register_tool(tooltype, material, itemdef)
+local function register_tool(tooltype, material, def)
 	minetest.register_tool("items_tools:"..tooltype.."_"..material, {
-		description = itemdef.description,
-		inventory_image = "items_tools_"..tooltype.."_"..material..".png"..
-			(itemdef.image_transform or ""),
-		wield_image = "items_tools_"..tooltype.."_"..material..".png"..
-			(itemdef.wield_image_transform or ""),
-		range = itemdef.range,
+		description = def.desc,
+
+		inventory_image = "items_tools_"..
+			tooltype.."_"..
+			material..".png"..
+			(def.image_transform or ""),
+
+		wield_image = "items_tools_"..
+			tooltype.."_"..
+			material..".png"..
+			(def.wield_image_transform or ""),
+
+		range = def.range,
+
 		tool_capabilities = {
-			full_punch_interval = itemdef.full_punch_interval,
-			max_drop_level = itemdef.max_drop_level,
+			full_punch_interval = def.full_punch_interval,
+			max_drop_level = def.max_drop_level,
 			groupcaps = {
-				cracky = get_capability(itemdef, "cracky"),
-				choppy = get_capability(itemdef, "choppy"),
-				snappy = get_capability(itemdef, "snappy"),
-				crumbly = get_capability(itemdef, "crumbly")
+				cracky = get_capability(def, "cracky"),
+				choppy = get_capability(def, "choppy"),
+				snappy = get_capability(def, "snappy"),
+				crumbly = get_capability(def, "crumbly")
 			},
-			damage_groups = itemdef.damage_groups,
+			damage_groups = def.damage_groups,
 		},
-		groups = itemdef.groups,
-		wield_scale = {x = 2, y = 2, z = 0.75},
+
+		groups = def.groups,
+
+		wield_scale = WIELD_TOOL_SCALE,
 	})
 end
 
-local function register_craft(tooltype, material, itemdef)
-	if tools.sources[material] == nil then
+local function register_craft(tooltype, name_material, def)
+	if items_tools.materials[name_material] == nil then
 		minetest.log("error", "Cannot find source material for the craft recipe"..
-			" (output='"..material.."')")
+			" (output='"..name_material.."')")
+		return
 	end
-	for _, r in pairs(tools[tooltype].get_recipes(tools.sources[material])) do
+
+	local tools = items_tools[tooltype]
+	local material = items_tools.materials[name_material]
+	local craft_recipes = tools.get_craft_recipes(material)
+
+	for _, r in pairs(craft_recipes) do
 		minetest.register_craft({
-			output = "items_tools:"..tooltype.."_"..material,
+			output = "items_tools:"..tooltype.."_"..name_material,
 			recipe = r
 		})
 	end
 end
 
-local tooltypes = {
-	"shovel", "pick"
-}
-
-for _, tooltype in ipairs(tooltypes) do
-	for material, _ in pairs(tools[tooltype]) do
-		local itemdef = tools[tooltype][material]
-		if type(itemdef) == "table" then
-			register_tool(tooltype, material, itemdef)
-			register_craft(tooltype, material, itemdef)
+for _, tooltype in ipairs(items_tools.tooltypes) do
+	local tools = items_tools[tooltype]
+	for material, _ in pairs(tools) do
+		local def = tools[material]
+		if type(def) == "table" then
+			register_tool(tooltype, material, def)
+			register_craft(tooltype, material, def)
 		end
 	end
 end
 
--- <<<<test>>>>
+-- Bows
 
 minetest.register_tool("items_tools:bow_wooden", {
 	description = "Wooden bow",

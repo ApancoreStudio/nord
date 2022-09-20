@@ -1,27 +1,15 @@
 -- tools picks
 
-tools.pick = {
-	get_recipes = function(source)
+items_tools.pick = {
+	get_craft_recipes = function(material)
 		return {{
-			{source, source, source},
+			{material, material, material},
 			{'', 'group:stick', ''},
 			{'', 'group:stick', ''},
 		}}
 	end,
-	wood = {
-		description = "Wooden Pickaxe",
-		full_punch_interval = 1.2,
-		max_drop_level = 0,
-		cracky = {
-			times={[3]=1.60},
-			uses=10,
-			maxlevel=1
-		},
-		damage_groups = {fleshy=2},
-		groups = {wooden = 1, pickaxe = 1},
-	},
 	flint = {
-		description = "Flint Pickaxe",
+		desc = "Flint Pickaxe",
 		full_punch_interval = 1.3,
 		max_drop_level = 0,
 		cracky = {
