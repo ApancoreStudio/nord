@@ -8,21 +8,52 @@ core_inventory.tabs_button =
 
 -- Вкладка крафта
 core_inventory.craft_formspec =
-	"list[current_player;craft;2,0.5;3,3;]"..
-	"list[current_player;craftpreview;5,1.5;1,1;]"
+	"size[9,8]"..
+	"listcolors[#00000000;#00000000;#ffffff00]"..
+	"list[current_player;craft;0.7,1.165;3,3;]"..
+	"list[current_player;craftpreview;1.7,6;1,1;]"..
+	"background[0,0;14,8;player_inventory_page1.png;true]"..
+	"listring[current_player;main]"..
+	"listring[current_player;craft]"..
+	"listring[current_player;main]"
+
+-- Для сумки 3x2
+local function bag_cells_images(active_cells, pos)
+	local formspec = ""
+	local poses = {
+		{0,0},
+		{1,0},
+		{0,1},
+		{1,1},
+		{0,2},
+		{1,2},
+	}
+
+	for i, v in ipairs(poses) do
+		if i > active_cells then
+			break
+		end
+		formspec = formspec..
+			string.format("image[%f,%f;1,1;%s]", pos[1]+v[1], pos[2]+v[2], "player_inventory_cell.png")
+	end
+	return formspec
+end
 
 core_inventory.storage_craft_formspec = function(player)
 	local inv = player:get_inventory()
 	local right_hipbag_size = inv:get_stack("equip_hipbag_right", 1):get_definition().groups.hipbag
 	local left_hipbag_size = inv:get_stack("equip_hipbag_left", 1):get_definition().groups.hipbag
 
-	local formspec = "list[current_player;main;1.5,4;4,6;]"
+	local formspec = "list[current_player;main;4.4,0.48;4,6;]"
 	if not inv:is_empty("equip_hipbag_right") then
-		formspec = formspec.."list[current_player;hipbag_right;6,4;2,"..right_hipbag_size..";]"
+		formspec = formspec..
+		"list[current_player;hipbag_right;4.4,4.8;2,"..right_hipbag_size..";]"..
+		bag_cells_images(right_hipbag_size*2, {4.4,4.8})
 	end
 
 	if not inv:is_empty("equip_hipbag_left") then
-		formspec = formspec.."list[current_player;hipbag_left;8,4;2,"..left_hipbag_size..";]"
+		formspec = formspec.."list[current_player;hipbag_left;6.4,4.8;2,"..left_hipbag_size..";]"..
+		bag_cells_images(left_hipbag_size*2, {6.4,4.8})
 	end
 
 	return formspec
@@ -35,6 +66,7 @@ end
 
 -- Вкладка экпировки
 core_inventory.equip_formspec =
+	"size[14,8]"..
 	"image[7.5,1.5;3,6;player.png]"..
 	"listcolors[#75593caa;#a3907d;#281c0f]"..
 	"background[0,0;14,8;player_inventory_background.png;true]"..
@@ -64,7 +96,7 @@ end
 
 -- Инвентарь игрока
 core_inventory.player_inventory = function(player, fields)
-	local formspec = "size[14,8]"
+	local formspec = ""
 
 	if not fields then
 		formspec = formspec..core_inventory.craft_tab(player)
