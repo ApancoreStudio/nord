@@ -10,7 +10,6 @@ items_tools.shovel = {
 	end,
 	flint = {
 		desc = "Flint Shovel",
-		wield_image_transform = "^[transformR90",
 		full_punch_interval = 1.4,
 		max_drop_level = 0,
 		crumbly = {
