@@ -96,3 +96,32 @@ minetest.register_craft({
 		{"group:log","group:log","group:log"},
 	}
 })
+
+local function register_ingot(material, def)
+	local name = "items_alchemy:"..material.."_ingot"
+	local image = "items_alchemy_"..material.."_ingot.png"
+	local groups = def["groups"]
+	groups["ingot"] = 1
+	minetest.register_craftitem(name, {
+		description = def.desc,
+		groups = groups,
+		inventory_image = image,
+		wield_image = image,
+		stack_max = 8,
+	})
+end
+
+local ingots_material = {
+	"bronze",
+}
+
+local ingots_def = {
+	["bronze"] = {
+		desc = "Bronze ingot",
+		groups = {bronze = 1},
+	},
+}
+
+for _, material in ipairs(ingots_material) do
+	register_ingot(material, ingots_def[material])
+end
