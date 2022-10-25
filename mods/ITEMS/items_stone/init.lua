@@ -6,11 +6,33 @@ minetest.register_node("items_stone:basalt", {
 	groups = {cracky = 3, stone = 1}
 })
 
+minetest.register_alias("basalt", "items_stone:basalt")
+
+minetest.register_node("items_stone:basalt_block", {
+	description = "Basalt block",
+	tiles = {"items_stone_basalt_block.png"},
+	groups = {cracky = 3, stone = 1}
+})
+
+minetest.register_alias("basalt_block", "items_stone:basalt_block")
+
+minetest.register_node("items_stone:basalt_block_glow", {
+	description = "Basalt block glow",
+	tiles = {"items_stone_basalt_block_glow.png"},
+	groups = {cracky = 3, stone = 1, light = 1},
+	paramtype = "light",
+	light_source = 14,
+})
+
+minetest.register_alias("basalt_block_glow", "items_stone:basalt_block_glow")
+
 minetest.register_node("items_stone:magma", {
 	description = "Magma",
 	tiles = {"items_stone_magma.png"},
 	groups = {cracky = 3, stone = 1},
 })
+
+minetest.register_alias("magma", "items_stone:magma")
 
 minetest.register_node("items_stone:magma_with_diamond", {
 	description = "Magma With Diamond",
@@ -53,8 +75,45 @@ minetest.register_node("items_stone:glowstone", {
 	light_source = 15,
 })
 
+minetest.register_alias("glowstone", "items_stone:glowstone")
+
 minetest.register_craftitem("items_stone:flint", {
 	description = "Flint",
 	inventory_image = "items_stone_flint.png",
 	groups = {flint = 1},
 })
+
+-- ores
+-- gold
+minetest.register_node("items_stone:basalt_with_gold", {
+	description = "Basalt with gold",
+	tiles = {"items_stone_basalt.png^items_stone_gold_ore.png"},
+	groups = {cracky = 3, stone = 1, gold = 1}
+})
+
+minetest.register_alias("basalt_with_gold", "items_stone:basalt_with_gold")
+
+minetest.register_craftitem("items_stone:gold_lump", {
+	description = "Gold Lump",
+	inventory_image = "items_stone_gold_lump.png",
+	groups = {gold = 1},
+})
+
+minetest.register_alias("gold_lump", "items_stone:gold_lump")
+
+-- coal
+minetest.register_node("items_stone:basalt_with_coal", {
+	description = "Basalt With Coal",
+	tiles = {"items_stone_basalt.png^items_stone_coal_ore.png"},
+	groups = {cracky = 3, stone = 1, gold = 1}
+})
+
+minetest.register_alias("basalt_with_coal", "items_stone:basalt_with_coal")
+
+minetest.register_craftitem("items_stone:coal_lump", {
+	description = "Coal Lump",
+	inventory_image = "items_stone_coal_lump.png",
+	groups = {gold = 1},
+})
+
+minetest.register_alias("coal_lump", "items_stone:coal_lump")
