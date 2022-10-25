@@ -41,7 +41,7 @@ minetest.register_node("items_soil:meadow_turf", {
 
 minetest.register_node("items_soil:forest_turf", {
 	description = "Forest turf",
-	tiles = {"items_soil_forest_turf.png", "main_chernozem.png",
+	tiles = {"items_soil_forest_turf.png", "items_soil_chernozem.png",
 	{name = "items_soil_chernozem.png^items_soil_forest_turf_side.png", tileable_vertical = false}},
 	groups = {crumbly = 3, oddly_breakable_by_hand = 1, soil = 1},
 	drop = "items_soil:chernozem",

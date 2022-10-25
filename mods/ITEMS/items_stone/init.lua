@@ -82,3 +82,38 @@ minetest.register_craftitem("items_stone:flint", {
 	inventory_image = "items_stone_flint.png",
 	groups = {flint = 1},
 })
+
+-- ores
+-- gold
+minetest.register_node("items_stone:basalt_with_gold", {
+	description = "Basalt with gold",
+	tiles = {"items_stone_basalt.png^items_stone_gold_ore.png"},
+	groups = {cracky = 3, stone = 1, gold = 1}
+})
+
+minetest.register_alias("basalt_with_gold", "items_stone:basalt_with_gold")
+
+minetest.register_craftitem("items_stone:gold_lump", {
+	description = "Gold Lump",
+	inventory_image = "items_stone_gold_lump.png",
+	groups = {gold = 1},
+})
+
+minetest.register_alias("gold_lump", "items_stone:gold_lump")
+
+-- coal
+minetest.register_node("items_stone:basalt_with_coal", {
+	description = "Basalt With Coal",
+	tiles = {"items_stone_basalt.png^items_stone_coal_ore.png"},
+	groups = {cracky = 3, stone = 1, gold = 1}
+})
+
+minetest.register_alias("basalt_with_coal", "items_stone:basalt_with_coal")
+
+minetest.register_craftitem("items_stone:coal_lump", {
+	description = "Coal Lump",
+	inventory_image = "items_stone_coal_lump.png",
+	groups = {gold = 1},
+})
+
+minetest.register_alias("coal_lump", "items_stone:coal_lump")
