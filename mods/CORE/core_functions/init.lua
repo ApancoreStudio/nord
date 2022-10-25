@@ -214,3 +214,5 @@ minetest.register_globalstep(function(dtime)
 		end
 	end
 end)
+
+dofile(minetest.get_modpath(minetest.get_current_modname()) .. "/core_crafts.lua")

@@ -162,7 +162,7 @@ core_inventory.set_inv_lists = function(inv)
 	inv:set_size("main", 16)
 	inv:set_size("equip_hipbag_right", 1)
 	inv:set_size("equip_hipbag_left", 1)
-	inv:set_size("craft", 16)
+	inv:set_size("craft", 9)
 end
 
 minetest.register_on_joinplayer(function(player)
