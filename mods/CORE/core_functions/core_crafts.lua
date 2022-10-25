@@ -31,28 +31,47 @@ local SEPARATOR = "/"
 			{{"craftitem"},
 			{ "craftitem","craftitem"},
 			{ "","","craftitem"},}
+
+	Заметки:
+		Форма имени для крафта:
+		"craftitem00,craftitem01"
 --]]
+
+-- Получить координаты элемента матрицы
+local function get_cord(i, w)
+	local x = i%w
+	if x == 0 then
+		x = w
+	end
+
+	local y = math.ceil(i/w)
+	minetest.log(x.." "..y)
+	return x, y
+end
 
 -- Зарегистрировать в таблицу форменный крафт
 local function register_shaped_craft(def)
 	local recipe = ""
-	for _, t in ipairs(def.recipe) do
-		recipe = recipe..table.concat(t, SEPARATOR)..SEPARATOR
+	for a, t in ipairs(def.recipe) do
+		for b, item in ipairs(t) do
+			if item ~= "" then
+				recipe = recipe..item..b..a
+			end
+		end
 	end
-	minetest.log(recipe) -- потом убрать
 	core_functions.registered_crafts[recipe] = def.output
 end
 
 -- Зарегистрировать в таблицу бесформенный крафт
 local function register_shapeless_craft(def)
 	local recipe = table.concat(def.recipe, SEPARATOR)
-	minetest.log(recipe) -- потом убрать
 	core_functions.registered_crafts[recipe] = def.output
 end
 
 -- Зарегистрировать крафт по указанному типу
 -- Если тип не указать, будет shaped
-core_functions.register_craft = function(def, craft_type)
+core_functions.register_craft = function(def)
+	local craft_type = def.type or "shaped"
 	if craft_type == "shaped" or craft_type == nil then
 		register_shaped_craft(def)
 	elseif craft_type == "shapeless" then
@@ -62,21 +81,7 @@ core_functions.register_craft = function(def, craft_type)
 	end
 end
 
--- потом удалить
-core_functions.register_craft({
-	output = "craftitem",
-	recipe =
-		{{"one", ""},
-		{"three", "four"}}
-})
-
--- потом удалить
-core_functions.register_craft({
-	output = "craftitem",
-	recipe = {"one", "", "three"}
-},
-"shapeless")
-
+-- Убрать пустые элементы из строки
 local function remove_empty_spaces(str)
 	local new_str = str
 	local k = 1
@@ -86,92 +91,78 @@ local function remove_empty_spaces(str)
 	return new_str
 end
 
+-- Отсортировать строку
 local function sort_string(str)
 	local tab = string.split(str, SEPARATOR)
 	table.sort(tab)
 	return table.concat(tab, SEPARATOR)
 end
 
+-- Получить результат форменного крафта по списку элементов и размеру
 local function get_shaped_craft_result(items_name, size)
+	minetest.log(table.concat(items_name, SEPARATOR)..SEPARATOR)
 	local w = size.w
 	local h = size.h
+	local new_w = w
 	local DELETE_NAME = "DELETE" -- Метка для лишних элементов
-	-- Пометить лишние окончания строк
-	for k=0, w do
-		for i=w-k, #items_name, w-k do
-			b = items_name[i] == "" or items_name[i] == DELETE_NAME
-			if not b then break end
-		end
-		if b then
-			for i=w-k, #items_name, w-k do
-				items_name[i] = DELETE_NAME
-			end
-		else
-			break
-		end
-	end
-
-	-- Пометить лишние начала строк
-	for k=0, w do
-		for i=k+1, #items_name, w-k do
-			b = items_name[i] == "" or items_name[i] == DELETE_NAME
-			if not b then break end
-		end
-		if b then
-			for i=k+1, #items_name, w-k do
-				items_name[i] = DELETE_NAME
-			end
-		else
-			break
-		end
-	end
-
-	minetest.log("GG "..table.concat(items_name, SEPARATOR)..SEPARATOR)
-
-	-- Пометить лишние окончания столбцов
+	local b = false
+	-- Удалить лишние строки в начале
 	for k=0, h do
-		for i=#items_name-h*k, #items_name-h*(k+1)+1, -1 do
-			b = items_name[i] == "" or items_name[i] == DELETE_NAME
+		-- Если есть полностью пустая строка,
+		for i=1, w, 1 do
+			b = items_name[k*w+i] == "" or items_name[k*w+i] == DELETE_NAME
 			if not b then break end
 		end
+		-- то удалить всю пустую строку
 		if b then
-			for i=#items_name-h*k, #items_name-h*(k+1)+1, -1 do
-				items_name[i] = DELETE_NAME
+			for i=1, w, 1 do
+				items_name[k*w+i] = DELETE_NAME
 			end
 		else
 			break
 		end
 	end
 
-	-- Пометить лишние окончания столбцов
-	for k=0, h do
-		for i=k+1, h+h*k do
+	-- Удалить лишние столбы слева
+	for k=0, w do
+		-- Если есть целый пустой столбец,
+		for i=1+k, #items_name, w do
+			minetest.log(i)
 			b = items_name[i] == "" or items_name[i] == DELETE_NAME
 			if not b then break end
 		end
+		-- то удалить весь пустой столбец
 		if b then
-			for i=k+1, h+h*k do
+			for i=1+k, #items_name, w do
 				items_name[i] = DELETE_NAME
 			end
+			-- Уменьшить ширину из-за удаления столбца
+			new_w = new_w-1
 		else
 			break
 		end
 	end
 
-	minetest.log("GG "..table.concat(items_name, SEPARATOR)..SEPARATOR)
-	new_items_name = {}
+	local item_names_table = {}
 	-- Удалить помеченные
 	for i, name in ipairs(items_name) do
 		if name ~= DELETE_NAME then
-			table.insert(new_items_name, name)
+			table.insert(item_names_table,name)
 		end
 	end
 
-	minetest.log(table.concat(new_items_name, SEPARATOR)..SEPARATOR)
-	minetest.log("---------------")
-	return core_functions.registered_crafts[table.concat(new_items_name, SEPARATOR)..SEPARATOR]
+	local item_names_string = ""
+	-- Создать строку-ключ
+	for i, name in ipairs(item_names_table) do
+		if name ~= "" then
+			local a, b = get_cord(i, new_w)
+			item_names_string = item_names_string..name..a..b
+		end
+	end
+	return core_functions.registered_crafts[item_names_string]
 end
 
+-- Получить результат бесформенного крафта по списку элементов
 local function get_shapeless_craft_result(items_name)
 	items_name = remove_empty_spaces(items_name)
 	items_name = sort_string(items_name)
@@ -215,31 +206,3 @@ core_functions.get_craft_result = function(item_list, size, craft_type)
 		craft_type.." не существует!")
 	end
 end
-
--- Потом удалить:
-minetest.register_on_player_inventory_action(function(player, action, inventory, inventory_info)
-	local inv = player:get_inventory()
-	minetest.log(inventory_info.to_list)
-	if action == "move" and (inventory_info.to_list == "custom_craft" or inventory_info.from_list == "custom_craft") then
-		local list = inv:get_list(inventory_info.to_list)
-		local result = core_functions.get_craft_result(list, {h = 3, w = 3}, "shaped")
-		local result_stack = inv:get_stack("custom_craft_result", 1)
-		if result then
-			result_stack:set_count(1)
-			result_stack:replace(result)
-			inv:set_stack("custom_craft_result", 1, result_stack)
-			minetest.log(result)
-		else
-			result_stack:set_count(0)
-			inv:set_stack("custom_craft_result", 1, result_stack)
-		end
-	elseif action == "move" and inventory_info.from_list == "custom_craft_result" then
-		inv:set_list("custom_craft", {})
-	end
-end)
-
-core_functions.register_craft({
-	output = "items_stone:basalt",
-	recipe = {{"items_trees:oak_log"},
-			{"items_trees:oak_log"},},},
-	"shaped")

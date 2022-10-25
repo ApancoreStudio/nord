@@ -10,10 +10,8 @@ core_inventory.tabs_button =
 core_inventory.craft_formspec =
 	"size[9,8]"..
 	"listcolors[#00000000;#00000000;#ffffff00]"..
-	--"list[current_player;craft;0.7,1.165;3,3;]"..
-	--"list[current_player;craftpreview;1.7,6;1,1;]"..
-	"list[current_player;custom_craft;0.7,1.165;3,3;]".. -- только для теста
-	"list[current_player;custom_craft_result;1.7,6;1,1;]".. -- только для теста
+	"list[current_player;craft;0.7,1.165;3,3;]"..
+	"list[current_player;craftpreview;1.7,6;1,1;]"..
 	"background[0,0;14,8;player_inventory_page1.png;true]"..
 	"listring[current_player;main]"..
 	"listring[current_player;craft]"..
@@ -165,8 +163,6 @@ core_inventory.set_inv_lists = function(inv)
 	inv:set_size("equip_hipbag_right", 1)
 	inv:set_size("equip_hipbag_left", 1)
 	inv:set_size("craft", 9)
-	inv:set_size("custom_craft", 9)
-	inv:set_size("custom_craft_result", 1)
 end
 
 minetest.register_on_joinplayer(function(player)
