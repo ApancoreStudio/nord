@@ -1,3 +1,4 @@
+-- luacheck: ignore
 -- Core crafts
 -- Создано для легкой поддержки пользовательских типов крафта
 
@@ -155,8 +156,8 @@ local function get_shaped_craft_result(items_name, size)
 	-- Создать строку-ключ
 	for i, name in ipairs(item_names_table) do
 		if name ~= "" then
-			local a, b = get_cord(i, new_w)
-			item_names_string = item_names_string..name..a..b
+			local x, y = get_cord(i, new_w)
+			item_names_string = item_names_string..name..x..y
 		end
 	end
 	return core_functions.registered_crafts[item_names_string]
