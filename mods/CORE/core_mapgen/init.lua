@@ -213,6 +213,41 @@ end
 
 register_interworld_stratum("items_stone:kharite", wherein_krarite, 87, -256)
 
+-- Ores
+-- Coal
+minetest.register_ore({
+	ore_type = "scatter",
+	ore = "items_stone:basalt_with_coal",
+	wherein = "items_stone:basalt",
+	clust_scarcity = 12*12*12,
+	clust_num_ores = 8,
+	clust_size = 3,
+	y_max = -64,
+	y_min = -84,
+})
+
+minetest.register_ore({
+	ore_type = "scatter",
+	ore = "items_stone:basalt_with_coal",
+	wherein = "items_stone:basalt",
+	clust_scarcity = 8*8*8,
+	clust_num_ores = 14,
+	clust_size = 3,
+	y_max = -84,
+	y_min = -98,
+})
+
+minetest.register_ore({
+	ore_type = "scatter",
+	ore = "items_stone:basalt_with_coal",
+	wherein = "items_stone:basalt",
+	clust_scarcity = 6*6*6,
+	clust_num_ores = 18,
+	clust_size = 4,
+	y_max = -98,
+	y_min = -128,
+})
+
 
 minetest.register_ore({
 	ore_type = "scatter",
@@ -225,6 +260,7 @@ minetest.register_ore({
 	y_min = -256,
 })
 
+-- Decoration
 minetest.register_decoration({
 	name = "core_mapgen:oak_bush",
 	deco_type = "schematic",
