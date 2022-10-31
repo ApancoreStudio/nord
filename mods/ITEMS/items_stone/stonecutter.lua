@@ -4,7 +4,7 @@ local nodebox = {
 	fixed = {
 		{-0.5, -0.5, -0.5, 0.5, 0, 0.5}
 	},
-},
+}
 
 minetest.register_node("items_stone:stonecutter", {
 	description = "Stonecutter",
