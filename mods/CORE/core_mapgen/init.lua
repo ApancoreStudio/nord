@@ -282,6 +282,40 @@ minetest.register_ore({
 	y_min = -128,
 })
 
+-- Copper
+minetest.register_ore({
+	ore_type = "scatter",
+	ore = "items_stone:basalt_with_copper",
+	wherein = "items_stone:basalt",
+	clust_scarcity = 18*18*18,
+	clust_num_ores = 4,
+	clust_size = 3,
+	y_max = -64,
+	y_min = -84,
+})
+
+minetest.register_ore({
+	ore_type = "scatter",
+	ore = "items_stone:basalt_with_copper",
+	wherein = "items_stone:basalt",
+	clust_scarcity = 14*14*14,
+	clust_num_ores = 5,
+	clust_size = 3,
+	y_max = -84,
+	y_min = -98,
+})
+
+minetest.register_ore({
+	ore_type = "scatter",
+	ore = "items_stone:basalt_with_copper",
+	wherein = "items_stone:basalt",
+	clust_scarcity = 10*10*10,
+	clust_num_ores = 6,
+	clust_size = 4,
+	y_max = -98,
+	y_min = -128,
+})
+
 minetest.register_ore({
 	ore_type = "scatter",
 	ore = "items_stone:magma_with_diamond",
