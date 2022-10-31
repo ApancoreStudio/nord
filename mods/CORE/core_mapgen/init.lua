@@ -248,6 +248,39 @@ minetest.register_ore({
 	y_min = -128,
 })
 
+-- Tin
+minetest.register_ore({
+	ore_type = "scatter",
+	ore = "items_stone:basalt_with_tin",
+	wherein = "items_stone:basalt",
+	clust_scarcity = 16*16*16,
+	clust_num_ores = 4,
+	clust_size = 3,
+	y_max = -64,
+	y_min = -84,
+})
+
+minetest.register_ore({
+	ore_type = "scatter",
+	ore = "items_stone:basalt_with_tin",
+	wherein = "items_stone:basalt",
+	clust_scarcity = 12*12*12,
+	clust_num_ores = 6,
+	clust_size = 3,
+	y_max = -84,
+	y_min = -98,
+})
+
+minetest.register_ore({
+	ore_type = "scatter",
+	ore = "items_stone:basalt_with_tin",
+	wherein = "items_stone:basalt",
+	clust_scarcity = 8*8*8,
+	clust_num_ores = 8,
+	clust_size = 4,
+	y_max = -98,
+	y_min = -128,
+})
 
 minetest.register_ore({
 	ore_type = "scatter",
