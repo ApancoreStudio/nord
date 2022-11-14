@@ -5,7 +5,6 @@ effects = {}
 local CONTROL_EATING = "RMB"
 local CONSUM_KEY = "consumption"
 local UPDATE_TIME_EATING = 0.5
--- local _time = 0 -- Неиспользуемая переменная. Удали, если не нужна (с) Доло
 
 effects.players = {} -- Эффекты будут сохранятся при перезаходе игрока, но не будут сохранятся при выключении сервера.
 
@@ -21,16 +20,6 @@ effects.register_effect = function(name, def)
 		end_effect_func = def.end_effect_func or function() end, -- Функция при окончании эффекта
 	}
 end
-
-effects.register_effect("poisoning", {
-	interval = 2,
-	effect_func = function(player)
-		local hp = player:get_hp()
-		local new_hp = hp - 2
-		if new_hp < 1 then new_hp = 1 end
-		player:set_hp(new_hp)
-	end,
-})
 
 -- Реализация эффекта
 effects.realization_effect = function(player, effect, effect_def)
@@ -98,15 +87,15 @@ end
 
 -- Команда добавить эффект
 minetest.register_chatcommand("add_effect", {
-    params = "<name> <effect> <duration>",
+	params = "<name> <effect> <duration>",
 
-    description = "",
+	description = "",
 
-    func = function(name, param)
+	func = function(name, param)
 		local params = core_functions.split(param)
 		local player = minetest.get_player_by_name(params[1])
 		effects.add_effect(player, params[2], params[3])
-    end,
+	end,
 })
 
 
@@ -145,7 +134,7 @@ end
 
 effects.imitation_of_eating = function(stack)
 	local name = stack
-	return name -- Избавился от неиспользуемой переменной
+	return name
 end
 
 core_callback.register_on_hold(function(player, control_name, hold_time)
