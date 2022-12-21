@@ -20,4 +20,17 @@ items_tools.pick = {
 		damage_groups = {fleshy = 3},
 		groups = {pickaxe = 1},
 	},
+
+	obsidian = {
+		desc = "Obsidian Pickaxe",
+		full_punch_interval = 1,
+		max_drop_level = 2,
+		cracky = {
+			times={[1] =1.5, [2]=1, [3]=0.6},
+			uses=50,
+			maxlevel=1
+		},
+		damage_groups = {fleshy = 4},
+		groups = {pickaxe = 1},
+	},
 }

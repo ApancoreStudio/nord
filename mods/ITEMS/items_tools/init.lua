@@ -7,6 +7,7 @@ dofile(minetest.get_modpath(minetest.get_current_modname()) .. "/picks.lua")
 
 items_tools.materials = {
 	["flint"] = "items_stone:flint",
+	["obsidian"] = "items_stone:obsidian_shard"
 }
 
 items_tools.tooltypes = {
@@ -14,7 +15,7 @@ items_tools.tooltypes = {
 	"pick",
 }
 
-local WIELD_TOOL_SCALE = {x = 2, y = 2, z = 0.75}
+local WIELD_TOOL_SCALE = {x = 2, y = 2, z = 1}
 
 -- Рука
 minetest.register_item(":", {
