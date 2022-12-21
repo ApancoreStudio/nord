@@ -57,12 +57,65 @@ minetest.register_node("items_stone:diamond_block", {
 
 minetest.register_alias("diamond_block", "items_stone:diamond_block")
 
+-- Granite
 minetest.register_node("items_stone:granite", {
 	description = "Granite",
 	tiles = {"items_stone_granite.png"},
 	groups = {cracky = 3, stone = 1}
 })
 
+minetest.register_node("items_stone:granite_bricks", {
+	description = "Granite Bricks",
+	tiles = {"items_stone_granite_bricks.png"},
+	groups = {cracky = 3, stone = 1}
+})
+
+-- Diorite
+minetest.register_node("items_stone:diorite", {
+	description = "Diorite",
+	tiles = {"items_stone_diorite.png"},
+	groups = {cracky = 3, stone = 1}
+})
+
+minetest.register_node("items_stone:diorite_bricks", {
+	description = "Diorite Bricks",
+	tiles = {"items_stone_diorite_bricks.png"},
+	groups = {cracky = 3, stone = 1}
+})
+
+-- Andesite
+minetest.register_node("items_stone:andesite", {
+	description = "Andesite",
+	tiles = {"items_stone_andesite.png"},
+	groups = {cracky = 3, stone = 1}
+})
+
+minetest.register_node("items_stone:andesite_bricks", {
+	description = "Andesite Bricks",
+	tiles = {"items_stone_andesite_bricks.png"},
+	groups = {cracky = 3, stone = 1}
+})
+
+-- Obsidian
+minetest.register_node("items_stone:obsidian", {
+	description = "Obsidian",
+	tiles = {"items_stone_obsidian.png"},
+	groups = {cracky = 2, stone = 1}
+})
+
+minetest.register_node("items_stone:obsidian_bricks", {
+	description = "Obsidian Bricks",
+	tiles = {"items_stone_obsidian_bricks.png"},
+	groups = {cracky = 2, stone = 1}
+})
+
+minetest.register_craftitem("items_stone:obsidian_shard", {
+	description = "Obsidian Shard",
+	inventory_image = "items_stone_obsidian_shard.png",
+	groups = {obsidian = 1},
+})
+
+-- Limestone
 minetest.register_node("items_stone:limestone", {
 	description = "Limestone",
 	tiles = {"items_stone_limestone.png"},
